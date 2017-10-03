@@ -22,16 +22,16 @@ def index():
     music_result = open(join(app.root_path, "data", "music_result.txt")).read()
     guide_list = [
         {
-            "title": "Music - Pure audio",
-            "example": "/api/music?search_terms=wake+me+up+acivii",
-            "format": "/api/music?search_terms=<Enter song|artist here>"
+            "title": "Pure audio search",
+            "example": url_for("audio_search") + "?search_terms=wake+me+up+acivii",
+            "format": url_for("audio_search") + "?search_terms=<Enter song|artist here>"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
 
 
-@app.route('/api/music')
-def music_search():
+@app.route('/api/audio')
+def audio_search():
     search_terms = request.args["search_terms"]
     vid_info = get_vid_info(search_terms)
     if  "entries" not in vid_info:
