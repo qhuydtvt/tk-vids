@@ -7,6 +7,7 @@ def get_vid_info(search_terms):
         'format': 'bestaudio/best',
         'cachedir': False,
         'geo_bypass_country': 'VN',
+        'geo_bypass': True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
