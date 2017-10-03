@@ -5,9 +5,6 @@ import json
 def get_vid_info(search_terms):
     ydl_options = {
         'format': 'bestaudio/best',
-        'cachedir': False,
-        'geo_bypass_country': 'US',
-        'geo_bypass': True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
