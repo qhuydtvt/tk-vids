@@ -5,8 +5,8 @@ import json
 def get_vid_info(search_terms):
     ydl_options = {
         'format': 'bestaudio/best',
-        'username': 'huynq.public',
-        'password': 'hithere1989',
+        'cachedir': False,
+        'geo_bypass_country': 'VN',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
