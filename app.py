@@ -7,7 +7,7 @@ def index():
 
 
 @app.route('/api/music')
-def index():
+def music_search():
     return "Music"
 
 if __name__ == '__main__':
