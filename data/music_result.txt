@@ -1,0 +1,10 @@
+{
+  success: 1,
+  data: {
+    url: "https://r6---sn-42u-i5o6.googlevideo.com/videoplayback?dur=272.441&initcwndbps=1871250&ei=g5LTWbKAPcvb4QLAho64Ag&expire=1507059428&mv=m&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Ckeepalive%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpcm2cms%2Cpl%2Crequiressl%2Csource%2Cexpire&clen=4520372&source=youtube&lmt=1449559706246774&key=yt6&itag=251&pcm2cms=yes&keepalive=yes&mn=sn-42u-i5o6&mm=31&pl=24&mime=audio%2Fwebm&id=o-ADF7U7kfu5MKZZsXk-q91FF67LSqgOV_O4WcPkaRXkfV&ipbits=0&requiressl=yes&ip=118.70.129.53&gir=yes&mt=1507037747&ms=au&signature=3A1F5BF6CDFABD44554733D475CFAE029165B38C.6E567BB8D46087214637D0DC50992FCB3B97A2D8&ratebypass=yes",
+
+    description: "Wake Me Up (Official Video) by Avicii. Out now on: iTunes - visit http://smarturl.it/wakemeup Spotify - http://smarturl.it/aviciiwakemeup Released on Universal through PRMD. Video production by At Night studios. To watch an exclusive Behind The Scenes filmed on the set of the 'Wake Me Up' video and for amazing Avicii competitions, android users can download the free Xperia Lounge app here: http://bit.ly/Xperia-Lounge-App More info on: http://www.facebook.com/avicii http://www.twitter.com/avicii http://www.avicii.com http://www.atnightmgmt.com",
+
+    thumbnail: "https://i.ytimg.com/vi/IcrbM1l_BoI/maxresdefault.jpg"
+  }
+}

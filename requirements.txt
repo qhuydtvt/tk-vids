@@ -26,4 +26,4 @@ mongoengine
 # Other
 # ----------------------
 youtube-dl
-flake8
+addict
