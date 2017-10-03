@@ -6,7 +6,7 @@ def get_vid_info(search_terms):
     ydl_options = {
         'format': 'bestaudio/best',
         'username': 'huynq.public',
-        'password': 'hithere1989'
+        'password': 'hithere1989',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
