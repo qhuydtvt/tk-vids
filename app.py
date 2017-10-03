@@ -4,7 +4,11 @@ from flask_restful import Resource, Api
 from os.path import join
 from urllib.request import urlopen
 import json
+import mlab
+from models.audio import Audio
 app = Flask(__name__)
+
+mlab.connect()
 
 def webpage_str(url):
     return urlopen(url).read.decode('utf-8')
@@ -33,23 +37,41 @@ def index():
 @app.route('/api/audio')
 def audio_search():
     search_terms = request.args["search_terms"]
-    vid_info = get_vid_info(search_terms)
-    if  "entries" not in vid_info:
-        return not_found_message
-    elif len(vid_info["entries"]) == 0:
-        return not_found_message
-    else:
-        if "formats" in vid_info["entries"][0]:
-            del vid_info["entries"][0]["formats"]
-        entry = vid_info["entries"][0]
-
+    audio = Audio.objects(search_terms=search_terms).first()
+    if audio != None:
         return json.dumps({
-            "sucess": 1,
+            "success": 1,
             "data": {
-                "url": entry["url"],
-                "thumbnail": entry["thumbnail"],
-                "description": entry["description"]
+                "url": audio.url,
+                "thumbnail": audio.thumbnail,
+                "description": audio.description
             }}, indent=4)
+    else:
+        vid_info = get_vid_info(search_terms)
+        if  "entries" not in vid_info:
+            return not_found_message
+        elif len(vid_info["entries"]) == 0:
+            return not_found_message
+        else:
+            if "formats" in vid_info["entries"][0]:
+                del vid_info["entries"][0]["formats"]
+            entry = vid_info["entries"][0]
+
+            audio = Audio(
+                search_terms=search_terms,
+                url=entry["url"],
+                thumbnail=entry["thumbnail"],
+                description=entry["description"]
+            )
+            audio.save()
+
+            return json.dumps({
+                "sucess": 1,
+                "data": {
+                    "url": entry["url"],
+                    "thumbnail": entry["thumbnail"],
+                    "description": entry["description"]
+                }}, indent=4)
 
 
 if __name__ == '__main__':
