@@ -37,41 +37,26 @@ def index():
 @app.route('/api/audio')
 def audio_search():
     search_terms = request.args["search_terms"]
-    audio = Audio.objects(search_terms=search_terms).first()
-    if audio != None:
-        return json.dumps({
-            "success": 1,
-            "data": {
-                "url": audio.url,
-                "thumbnail": audio.thumbnail,
-                "description": audio.description
-            }}, indent=4)
+
+    vid_info = get_vid_info(search_terms)
+    if  "entries" not in vid_info:
+        return not_found_message
+    elif len(vid_info["entries"]) == 0:
+        return not_found_message
     else:
-        vid_info = get_vid_info(search_terms)
-        if  "entries" not in vid_info:
-            return not_found_message
-        elif len(vid_info["entries"]) == 0:
-            return not_found_message
-        else:
-            if "formats" in vid_info["entries"][0]:
-                del vid_info["entries"][0]["formats"]
-            entry = vid_info["entries"][0]
+        if "formats" in vid_info["entries"][0]:
+            del vid_info["entries"][0]["formats"]
+        entry = vid_info["entries"][0]
 
-            audio = Audio(
-                search_terms=search_terms,
-                url=entry["url"],
-                thumbnail=entry["thumbnail"],
-                description=entry["description"]
-            )
-            audio.save()
 
-            return json.dumps({
-                "sucess": 1,
-                "data": {
-                    "url": entry["url"],
-                    "thumbnail": entry["thumbnail"],
-                    "description": entry["description"]
-                }}, indent=4)
+
+        return json.dumps({
+            "sucess": 1,
+            "data": {
+                "url": entry["url"],
+                "thumbnail": entry["thumbnail"],
+                "description": entry["description"]
+            }}, indent=4)
 
 
 if __name__ == '__main__':
