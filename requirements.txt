@@ -8,6 +8,7 @@ flask-mongoengine
 flask-redis
 Pillow
 flask-socketio
+flask_apscheduler
 
 # ----------------------
 # Testing
