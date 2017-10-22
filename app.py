@@ -6,9 +6,44 @@ from urllib.request import urlopen
 import json
 import mlab
 from models.audio import Audio
+from flask_apscheduler import APScheduler
+from flask_restful import Resource, Api
+
 app = Flask(__name__)
+api = Api(app)
 
 mlab.connect()
+
+class ApiAudio(Resource):
+    def get(self):
+        search_terms = request.args["search_terms"]
+
+        audio = Audio.objects(search_terms=search_terms).first()
+        if audio is not None:
+            return {
+                'success': 1,
+                'data': mlab.item2json(audio)
+            }
+        else:
+            vid_info = get_vid_info(search_terms)
+            if  "entries" not in vid_info:
+                return not_found_message
+            elif len(vid_info["entries"]) == 0:
+                return not_found_message
+            else:
+                if "formats" in vid_info["entries"][0]:
+                    del vid_info["entries"][0]["formats"]
+                entry = vid_info["entries"][0]
+
+                audio = Audio(search_terms=search_terms, url=entry["url"], thumbnail=entry["thumbnail"], description=entry["description"])
+                audio.save()
+
+                return {
+                    'success': 1,
+                    'data': mlab.item2json(audio)
+                }
+
+
 
 def webpage_str(url):
     return urlopen(url).read.decode('utf-8')
@@ -19,10 +54,8 @@ not_found_message = json.dumps ({
 })
 
 
-
 @app.route('/')
 def index():
-    # open(join(app.root_path, "/data/music_result.txt")).read().decode('utf-8')
     music_result = open(join(app.root_path, "data", "music_result.txt")).read()
     guide_list = [
         {
@@ -33,38 +66,7 @@ def index():
     ]
     return render_template("index.html", guide_list=guide_list)
 
-
-@app.route('/api/audio')
-def audio_search():
-    search_terms = request.args["search_terms"]
-
-    audio = Audio.objects(search_terms=search_terms).first()
-    if audio is not None:
-        return json.dumps({
-            'success': 1,
-            'data': audio.to_dict()
-        })
-    else:
-        vid_info = get_vid_info(search_terms)
-        if  "entries" not in vid_info:
-            return not_found_message
-        elif len(vid_info["entries"]) == 0:
-            return not_found_message
-        else:
-            if "formats" in vid_info["entries"][0]:
-                del vid_info["entries"][0]["formats"]
-            entry = vid_info["entries"][0]
-
-            audio = Audio(search_terms=search_terms, url=entry["url"], thumbnail=entry["thumbnail"], description=entry["description"])
-
-            return json.dumps({
-                "success": 1,
-                "data": {
-                    "url": entry["url"],
-                    "thumbnail": entry["thumbnail"],
-                    "description": entry["description"]
-                }}, indent=4)
-
+api.add_resource(ApiAudio, '/api/audio')
 
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run()
