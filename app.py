@@ -38,25 +38,32 @@ def index():
 def audio_search():
     search_terms = request.args["search_terms"]
 
-    vid_info = get_vid_info(search_terms)
-    if  "entries" not in vid_info:
-        return not_found_message
-    elif len(vid_info["entries"]) == 0:
-        return not_found_message
-    else:
-        if "formats" in vid_info["entries"][0]:
-            del vid_info["entries"][0]["formats"]
-        entry = vid_info["entries"][0]
-
-
-
+    audio = Audio.objects(search_terms=search_terms).first()
+    if audio is not None:
         return json.dumps({
-            "sucess": 1,
-            "data": {
-                "url": entry["url"],
-                "thumbnail": entry["thumbnail"],
-                "description": entry["description"]
-            }}, indent=4)
+            'success': 1,
+            'data': audio.to_dict()
+        })
+    else:
+        vid_info = get_vid_info(search_terms)
+        if  "entries" not in vid_info:
+            return not_found_message
+        elif len(vid_info["entries"]) == 0:
+            return not_found_message
+        else:
+            if "formats" in vid_info["entries"][0]:
+                del vid_info["entries"][0]["formats"]
+            entry = vid_info["entries"][0]
+
+            audio = Audio(search_terms=search_terms, url=entry["url"], thumbnail=entry["thumbnail"], description=entry["description"])
+
+            return json.dumps({
+                "success": 1,
+                "data": {
+                    "url": entry["url"],
+                    "thumbnail": entry["thumbnail"],
+                    "description": entry["description"]
+                }}, indent=4)
 
 
 if __name__ == '__main__':
