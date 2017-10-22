@@ -60,8 +60,8 @@ def index():
     guide_list = [
         {
             "title": "Pure audio search",
-            "example": url_for("audio_search") + "?search_terms=wake+me+up+acivii",
-            "format": url_for("audio_search") + "?search_terms=<Enter song|artist here>"
+            "example": url_for("apiaudio") + "?search_terms=wake+me+up+acivii",
+            "format": url_for("apiaudio") + "?search_terms=<Enter song|artist here>"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
