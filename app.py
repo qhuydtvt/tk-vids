@@ -16,7 +16,7 @@ mlab.connect()
 
 class ApiAudio(Resource):
     def get(self):
-        search_terms = request.args["search_terms"]
+        search_terms = request.args["search_terms"].lower()
 
         audio = Audio.objects(search_terms=search_terms).first()
         if audio is not None:
