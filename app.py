@@ -51,11 +51,12 @@ not_found_message = json.dumps ({
 @app.route('/')
 def index():
     music_result = open(join(app.root_path, "data", "music_result.txt")).read()
+    rule = request.url_rule
     guide_list = [
         {
             "title": "Pure audio search",
-            "example": request.base_url + "api/audio?search_terms=wake+me+up+acivii",
-            "format": request.base_url + "api/audio?search_terms=<Enter song|artist here>"
+            "example": rule + "api/audio?search_terms=wake+me+up+acivii",
+            "format": rule + "api/audio?search_terms=<Enter song|artist here>"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
