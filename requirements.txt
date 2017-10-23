@@ -4,11 +4,8 @@
 flask
 flask-restful
 flask-jwt
-flask-mongoengine
-flask-redis
 Pillow
-flask-socketio
-flask_apscheduler
+beautifulsoup4
 
 # ----------------------
 # Testing
@@ -28,3 +25,4 @@ mongoengine
 # ----------------------
 youtube-dl
 addict
+xmltodict

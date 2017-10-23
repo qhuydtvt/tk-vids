@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for
-from youtube import get_vid_info
+from music_dl import get_music_info
 from flask_restful import Resource, Api
 from os.path import join
 from urllib.request import urlopen
@@ -8,15 +8,17 @@ import mlab
 from models.audio import Audio
 from flask_apscheduler import APScheduler
 from flask_restful import Resource, Api
+import models.utils
 
 app = Flask(__name__)
 api = Api(app)
 
 mlab.connect()
 
+
 class ApiAudio(Resource):
     def get(self):
-        search_terms = request.args["search_terms"].lower()
+        search_terms = request.args["search_terms"].lower().strip()
 
         audio = Audio.objects(search_terms=search_terms).first()
         if audio is not None:
@@ -25,17 +27,11 @@ class ApiAudio(Resource):
                 'data': mlab.item2json(audio)
             }
         else:
-            vid_info = get_vid_info(search_terms)
-            if  "entries" not in vid_info:
-                return not_found_message
-            elif len(vid_info["entries"]) == 0:
+            music_info = get_music_info(search_terms)
+            if music_info is None:
                 return not_found_message
             else:
-                if "formats" in vid_info["entries"][0]:
-                    del vid_info["entries"][0]["formats"]
-                entry = vid_info["entries"][0]
-
-                audio = Audio(search_terms=search_terms, url=entry["url"], thumbnail=entry["thumbnail"], description=entry["description"])
+                audio = Audio(search_terms=search_terms, url=music_info["url"], thumbnail=music_info["thumbnail"])
                 audio.save()
 
                 return {
