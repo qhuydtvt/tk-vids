@@ -6,7 +6,6 @@ from urllib.request import urlopen
 import json
 import mlab
 from models.audio import Audio
-from flask_apscheduler import APScheduler
 from flask_restful import Resource, Api
 import models.utils
 
