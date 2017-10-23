@@ -14,7 +14,6 @@ api = Api(app)
 
 mlab.connect()
 
-
 class ApiAudio(Resource):
     def get(self):
         search_terms = request.args["search_terms"].lower().strip()
@@ -55,8 +54,8 @@ def index():
     guide_list = [
         {
             "title": "Pure audio search",
-            "example": url_for("apiaudio") + "?search_terms=wake+me+up+acivii",
-            "format": url_for("apiaudio") + "?search_terms=<Enter song|artist here>"
+            "example": request.base_url + "api/audio?search_terms=wake+me+up+acivii",
+            "format": request.base_url + "api/audio?search_terms=<Enter song|artist here>"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
