@@ -55,8 +55,8 @@ def index():
     guide_list = [
         {
             "title": "Pure audio search",
-            "example": rule + "api/audio?search_terms=wake+me+up+acivii",
-            "format": rule + "api/audio?search_terms=<Enter song|artist here>"
+            "example": "services/api/audio?search_terms=wake+me+up+acivii",
+            "format": "services/api/audio?search_terms=<Enter song|artist here>"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
