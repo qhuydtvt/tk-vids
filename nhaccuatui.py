@@ -11,9 +11,19 @@ def search(search_terms):
     url = SEARCH_FORMAT.format(search_terms)
     html = urlopen(url).read().decode('utf-8')
     soup = BeautifulSoup(html, "html.parser")
+
     ul_song_list = soup.find('ul', 'search_returns_list')
+    if ul_song_list is None:
+        return None
+
     li_first_song = ul_song_list.find('li')
+    if li_first_song is None:
+        return None
+
     a_song_link = ul_song_list.find('a', 'name_song search')
+    if a_song_link is None or "href" not in a_song_link:
+        return None
+
     return a_song_link["href"]
 
 
@@ -21,7 +31,10 @@ def extract_song_source(song_link):
     html = urlopen(song_link).read().decode('utf-8')
     re_xml = re.compile("file=(.*?)\"")
     xml_match = re_xml.search(html)
-    xml_link = xml_match.group().replace('file=', '').replace('\"', '')
+    xml_group = xml_match.group()
+    if xml_group is None:
+        return None
+    xml_link = xml_group.replace('file=', '').replace('\"', '')
     song_xml = urlopen(xml_link).read().decode('utf-8')
 
     import xmltodict
