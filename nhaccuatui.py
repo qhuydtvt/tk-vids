@@ -6,7 +6,7 @@ import re
 
 
 def search(search_terms):
-    SEARCH_FORMAT = "http://www.nhaccuatui.com/tim-kiem?q={}"
+    SEARCH_FORMAT = "http://www.nhaccuatui.com/tim-kiem/bai-hat?q={0}"
     search_terms = quote_plus(search_terms.strip().lower())
     url = SEARCH_FORMAT.format(search_terms)
     html = urlopen(url).read().decode('utf-8')
@@ -16,12 +16,12 @@ def search(search_terms):
     if ul_song_list is None:
         return None
 
-    li_first_song = ul_song_list.find('li')
+    li_first_song = ul_song_list.find('li', 'list_song search')
     if li_first_song is None:
         return None
 
-    a_song_link = ul_song_list.find('a', 'name_song search')
-    if a_song_link is None or "href" not in a_song_link:
+    a_song_link = li_first_song.find('a')
+    if a_song_link is None:
         return None
 
     return a_song_link["href"]
@@ -51,5 +51,5 @@ def get_song_source(search_terms):
 
 
 if __name__ == "__main__":
-    link = get_song_source("angle with a shotgun nightcore")
+    link = get_song_source("look what you made me do")
     print(link)
