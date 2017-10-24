@@ -8,6 +8,7 @@ import json
 
 
 def preload_songs():
+    Audio.drop_collection()
     for subgenre in subgenres:
         preload_one_song(subgenre["id"])
 
@@ -40,7 +41,19 @@ def extract_search_terms(entry):
 
 
 if __name__ == "__main__":
+    from apscheduler.schedulers.blocking import BlockingScheduler
+    sched = BlockingScheduler()
+
+    @sched.scheduled_job('interval', seconds=3)
+    def timed_job():
+        import mlab
+        mlab.connect()
+        preload_songs()
+        print('This job is run every three minutes.')
+
+    @sched.scheduled_job('cron', day_of_week='mon-fri', hour=17)
+    def scheduled_job():
+        print('This job is run every weekday at 5pm.')
+
+    sched.start()
     # print(json.dumps(preload_one_song(20), indent=4))
-    import mlab
-    mlab.connect()
-    preload_songs()

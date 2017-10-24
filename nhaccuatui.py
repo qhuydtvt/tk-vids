@@ -47,9 +47,11 @@ def extract_song_source(song_link):
 
 def get_song_source(search_terms):
     link = search(search_terms)
+    if link is None:
+        return None
     return extract_song_source(link)
 
 
 if __name__ == "__main__":
-    link = get_song_source("we own the night")
+    link = get_song_source("dança do creu mc créu")
     print(link)
