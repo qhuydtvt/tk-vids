@@ -44,7 +44,7 @@ if __name__ == "__main__":
     from apscheduler.schedulers.blocking import BlockingScheduler
     sched = BlockingScheduler()
 
-    @sched.scheduled_job('interval', seconds=3)
+    @sched.scheduled_job('interval', hours=12)
     def timed_job():
         import mlab
         mlab.connect()
