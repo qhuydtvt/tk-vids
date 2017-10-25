@@ -3,6 +3,7 @@ from music_dl import get_music_info
 from flask_restful import Resource, Api
 from os.path import join
 from urllib.request import urlopen
+from nhaccuatui import get_song_source
 import json
 import mlab
 from models.audio import Audio
@@ -19,7 +20,10 @@ class ApiAudio(Resource):
         search_terms = request.args["search_terms"].lower().strip()
 
         audio = Audio.objects(search_terms=search_terms).first()
+
         if audio is not None:
+            url = get_song_source(search_terms)
+            audio.update(set__url=url)
             return {
                 'success': 1,
                 'data': mlab.item2json(audio)
