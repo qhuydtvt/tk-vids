@@ -22,8 +22,8 @@ class ApiAudio(Resource):
         audio = Audio.objects(search_terms=search_terms).first()
 
         if audio is not None:
-            url = get_song_source(search_terms)
-            audio.update(set__url=url)
+            # url = get_song_source(search_terms)
+            # audio.update(set__url=url)
             return {
                 'success': 1,
                 'data': mlab.item2json(audio)
