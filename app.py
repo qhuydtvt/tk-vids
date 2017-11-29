@@ -59,7 +59,7 @@ def index():
     guide_list = [
         {
             "title": "Pure audio search",
-            "example": "api/audio?search_terms=wake+me+up",
+            "example": "api/audio?search_terms=thunder+imagine+dragons",
             "format": "api/audio?search_terms=<Enter song|artist here>"
         }
     ]
