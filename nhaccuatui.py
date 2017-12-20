@@ -31,6 +31,8 @@ def extract_song_source(song_link):
     html = urlopen(song_link).read().decode('utf-8')
     re_xml = re.compile("file=(.*?)\"")
     xml_match = re_xml.search(html)
+    if xml_match is None:
+        return None
     xml_group = xml_match.group()
     if xml_group is None:
         return None
