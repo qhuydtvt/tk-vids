@@ -44,7 +44,7 @@ def extract_song_source(song_link):
 
     location = song_xml_dict["tracklist"]["track"]["location"]
     location = location.replace('<![CDATA[','').replace(']]>', '')
-    return location
+    return [location, xml_link]
 
 
 def get_song_source(search_terms):

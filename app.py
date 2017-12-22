@@ -22,27 +22,32 @@ class ApiAudio(Resource):
         audio = Audio.objects(search_terms=search_terms).first()
 
         if audio is not None:
-            print("Audio exists, refresh song source")
-            song_source = get_song_source(search_terms)
-            if song_source is not None:
-                audio.url = song_source
+            ##print("Audio exists, refresh song source")
+            # ##urls = get_song_source(search_terms)
+            #
+            # if urls is not None:
+            #     audio.url = song_source
             return {
                 'success': 1,
                 'data': mlab.item2json(audio)
             }
         else:
-            print("Audio does not exist, get both thumbnail and song source")
-            music_info = get_music_info(search_terms)
-            if music_info is None:
-                return not_found_message
-            else:
-                audio = Audio(search_terms=search_terms, url=music_info["url"], thumbnail=music_info["thumbnail"])
-                audio.save()
-
-                return {
-                    'success': 1,
-                    'data': mlab.item2json(audio)
-                }
+            return {
+                'success': 0,
+                'message': 'Not found'
+            }
+            # print("Audio does not exist, get both thumbnail and song source")
+            # music_info = get_music_info(search_terms)
+            # if music_info is None:
+            #     return not_found_message
+            # else:
+            #     audio = Audio(search_terms=search_terms, url=music_info["url"], thumbnail=music_info["thumbnail"])
+            #     audio.save()
+            #
+            #     return {
+            #         'success': 1,
+            #         'data': mlab.item2json(audio)
+            #     }
 
 
 
