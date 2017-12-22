@@ -69,4 +69,4 @@ def index():
 api.add_resource(ApiAudio, '/api/audio')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=1212)
