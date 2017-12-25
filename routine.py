@@ -42,9 +42,11 @@ def extract_search_terms(entry):
 
 if __name__ == "__main__":
     import sys
+    import mlab
+    mlab.connect()
+    if '--drop' in sys.argv:
+        Audio.drop_collection()
     if '--force' in sys.argv:
-        import mlab
-        mlab.connect()
         preload_songs()
     else:
         from apscheduler.schedulers.blocking import BlockingScheduler

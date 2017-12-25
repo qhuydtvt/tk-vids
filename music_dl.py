@@ -1,5 +1,5 @@
 from youtube import get_vid_info
-from nhaccuatui import get_song_source
+from nhaccuatui import get_song_meta
 
 
 def get_music_info(search_terms):
@@ -8,12 +8,12 @@ def get_music_info(search_terms):
         return None
     vid_info = entries[0]
     print("Getting song source: " + search_terms)
-    urls = get_song_source(search_terms)
-    if urls is None:
+    url = get_song_meta(search_terms)
+    if url is None:
         return None
     return {
         'thumbnail': vid_info['thumbnail'],
-        'urls': urls
+        'url': url
     }
 
 if __name__ == "__main__":
