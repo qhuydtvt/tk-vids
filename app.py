@@ -49,7 +49,8 @@ def index():
         {
             "title": "Pure audio search",
             "example": "api/audio?search_terms=thunder+imagine+dragons",
-            "format": "api/audio?search_terms=<Enter song|artist here>"
+            "format": "api/audio?search_terms=<Enter song|artist here>",
+            "parse_xml": "http://bit.ly/tk-xml-parser"
         }
     ]
     return render_template("index.html", guide_list=guide_list)
