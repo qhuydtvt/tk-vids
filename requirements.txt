@@ -1,11 +1,12 @@
 # ----------------------
-# Flask
+# Main libraries
 # ----------------------
 flask
 flask-restful
 flask-jwt
 Pillow
 beautifulsoup4
+flask-cors
 
 # ----------------------
 # Testing

@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, url_for
-from music_dl import get_music_info
-from flask_restful import Resource, Api
-from os.path import join
+from flask import Flask, render_template, request
+from flask_cors import CORS
 from urllib.request import urlopen
-from nhaccuatui import get_song_source
 import json
 import mlab
 from models.audio import Audio
 from flask_restful import Resource, Api
-import models.utils
 
 app = Flask(__name__)
+cors = CORS(app, resources={r'/api/*': {"origins": "*"}})
 api = Api(app)
 
 mlab.connect()
@@ -43,8 +40,6 @@ not_found_message = json.dumps ({
 
 @app.route('/')
 def index():
-    music_result = open(join(app.root_path, "data", "music_result.txt")).read()
-    rule = request.url_rule
     guide_list = [
         {
             "title": "Pure audio search",
